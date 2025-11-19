@@ -1,6 +1,7 @@
 import java.io.*;
 import java.net.Socket;
 import java.io.IOException;
+//import java.net.http.HttpResponse;
 
 public class ConnectionHandler implements Runnable{
     private Socket clientSocket;    //记录客户端socket
@@ -37,17 +38,24 @@ public class ConnectionHandler implements Runnable{
                 String requestLower = requestBuilder.toString().toLowerCase();
                 isAlive = requestLower.contains("connection: keep-alive");
 
+                HttpRequestParser parser=new HttpRequestParser();
+                HttpRequestParser.HttpRequest req=parser.parse(new ByteArrayInputStream(requestBuilder.toString().getBytes()));
+                boolean keep=req!=null&&req.isKeepAlive();
+                HttpResponse response=new HttpResponse().status(200)
+                        .contentType("text/plain")
+                        .body("Hello from BIO HTTP Server!")
+                        .keepAlive(keep);
                 // 构造响应内容 写死
-                String body = "Hello from BIO HTTP Server!";
-                String response =
-                        "HTTP/1.1 test01 OK\r\n" +
-                                "Content-Type: text/plain\r\n" +
-                                "Content-Length: " + body.length() + "\r\n" +
-                                (isAlive ? "Connection: keep-alive\r\n" : "Connection: close\r\n") +
-                                "\r\n" +
-                                body;
-
-                out.write(response.getBytes());
+//                String body = "Hello from BIO HTTP Server!";
+//                String response =
+//                        "HTTP/1.1 test01 OK\r\n" +
+//                                "Content-Type: text/plain\r\n" +
+//                                "Content-Length: " + body.length() + "\r\n" +
+//                                (isAlive ? "Connection: keep-alive\r\n" : "Connection: close\r\n") +
+//                                "\r\n" +
+//                                body;
+//
+                out.write(response.toBytes());
                 out.flush();
 
                 if (!isAlive) {
