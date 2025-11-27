@@ -1,8 +1,6 @@
 
 import java.util.*;
-import java.nio.charset.StandardCharsets;////这个头文件是干嘛的
-///
-
+import java.nio.charset.StandardCharsets;
 
 //模拟构建HTTP响应，设置响应的状态，头部，正文。
 public class HttpResponse {

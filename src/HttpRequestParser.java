@@ -4,8 +4,6 @@ import java.io.InputStream;
 import java.util.*;
 import java.io.IOException;
 
-
-
 public class HttpRequestParser {
 
     public static class HttpRequest{
