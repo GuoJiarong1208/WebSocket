@@ -23,7 +23,7 @@ public class UserController {
         if (!"POST".equalsIgnoreCase(request.getMethod())) {
             return new HttpResponse()
                     .status(405)  // Method Not Allowed
-                    .contentType("text/plain")
+                    .contentType("text/plain;charset=UTF-8")
                     .body("只支持POST请求")
                     .keepAlive(request.isKeepAlive());
         }
@@ -58,11 +58,31 @@ public class UserController {
      * 请求体格式: username=xxx&password=xxx
      */
     public HttpResponse handleLogin(HttpRequestParser.HttpRequest request) {
-        // 只接受POST方法
-        if (!"POST".equalsIgnoreCase(request.getMethod())) {
+        String method = request.getMethod();
+
+        // GET: 返回登录页
+        if ("GET".equalsIgnoreCase(method)) {
+            String html = "<!doctype html><html><head><meta charset=\"UTF-8\"><title>登录</title></head>"
+                    + "<body>"
+                    + "<h1>登录</h1>"
+                    + "<form method=\"POST\" action=\"/login\">"
+                    + "  <label>用户名：<input type=\"text\" name=\"username\"/></label><br/>"
+                    + "  <label>密码：<input type=\"password\" name=\"password\"/></label><br/>"
+                    + "  <button type=\"submit\">登录</button>"
+                    + "</form>"
+                    + "</body></html>";
+            return new HttpResponse()
+                    .status(200)
+                    .contentType("text/html; charset=UTF-8")
+                    .body(html)
+                    .keepAlive(request.isKeepAlive());
+        }
+
+        // 只接受 POST 处理登录
+        if (!"POST".equalsIgnoreCase(method)) {
             return new HttpResponse()
                     .status(405)
-                    .contentType("text/plain")
+                    .contentType("text/plain;charset=UTF-8")
                     .body("只支持POST请求")
                     .keepAlive(request.isKeepAlive());
         }
@@ -110,7 +130,7 @@ public class UserController {
                     String value = URLDecoder.decode(kv[1], "UTF-8");
                     params.put(key, value);
                 } catch (UnsupportedEncodingException e) {
-                    // UTF-8总是支持的，这里不会抛出异常
+                    //不会到达
                 }
             }
         }

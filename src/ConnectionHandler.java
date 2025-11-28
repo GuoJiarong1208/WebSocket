@@ -12,7 +12,7 @@ public class ConnectionHandler implements Runnable{
     }
 
     @Override
-    public void run(){      //threadPool.execut用
+    public void run(){      //threadPool.execute()调用
         try (BufferedReader in =
                      new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
              OutputStream out = clientSocket.getOutputStream()) {
