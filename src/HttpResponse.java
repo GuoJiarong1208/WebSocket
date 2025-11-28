@@ -19,6 +19,7 @@ public class HttpResponse {
         REASONS.put(304,"Not Modified");
         REASONS.put(405,"Method Not Allowed");
         REASONS.put(500,"Internal Server Error");
+        REASONS.put(401,"Unauthorized");
     }
     public HttpResponse() {
         this.status = 200;
