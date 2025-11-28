@@ -1,7 +1,3 @@
-后面如果用到响应的各部分，关注那几个get函数即可。
-如果有看不懂的请把代码喂给AI。。。
-第三步可能还需要在ConnectionHandler.java里面继续完善.
-
 #### 主题：基于Java Socket API搭建简单的HTTP客户端和服务器端程序
 
 说明：
@@ -28,3 +24,5 @@
 | B：HTTP协议解析 & 响应构造 | 解析请求行/头/体；构造响应行/头；处理MIME & 状态码（200/301/302/304/404/405/500） | HttpRequestParser.java<br>HttpResponse.java<br>MimeType.java |
 | C：业务接口（注册/登录）与路由 | HashMap存用户；实现/register /login POST处理；实现重定向；路由路径分发 | Router.java<br>UserService.java<br>UserController.java |
 | D：客户端 + 文档 + 演示  | 用Socket手写GET/POST请求，打印响应，支持302自动重定向；编写最终报告 + 演示流程 | HttpClient.java + 说明文档 + PPT          |
+
+根据现在的`Main()`,运行或者调试需要先点运行，然后进入浏览器`http://localhost:8080`，然后正常输入注册或者登录，注册成功后会自动跳到登录表单，如果想要回到注册可以重新进入前述地址
