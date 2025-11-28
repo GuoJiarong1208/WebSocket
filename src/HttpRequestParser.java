@@ -38,7 +38,7 @@ public class HttpRequestParser {
     }
 
     //下面是解析请求的函数，阻塞直到读到空行，按照Content-Length再读体
-    public HttpRequest parse(InputStream in) throws IOException{
+    public HttpRequest parse(InputStream in,String body1) throws IOException{
 
         BufferedReader reader=new BufferedReader(new InputStreamReader(in));
         String startLine=reader.readLine();
@@ -63,23 +63,23 @@ public class HttpRequestParser {
             }
         }
 
-        String body="";
-        String cl=headers.get("content-length");
-        if(cl!=null){
-            int len;
-            try{ len=Integer.parseInt(cl);}
-            catch (NumberFormatException e){ len=0;}
-            if(len>0){
-                char[] buf=new char[len];
-                int off=0;
-                while (off<len){
-                    int r=reader.read(buf,off,len-off);
-                    if(r==-1) break;
-                    off+=r;
-                }
-                body=new String(buf,0,off);
-            }
-        }
+        String body=body1;
+//        String cl=headers.get("content-length");
+//        if(cl!=null){
+//            int len;
+//            try{ len=Integer.parseInt(cl);}
+//            catch (NumberFormatException e){ len=0;}
+//            if(len>0){
+//                char[] buf=new char[len];
+//                int off=0;
+//                while (off<len){
+//                    int r=reader.read(buf,off,len-off);
+//                    if(r==-1) break;
+//                    off+=r;
+//                }
+//                body=new String(buf,0,off);
+//            }
+//        }
 
         return new HttpRequest(method,path,version,headers,body);
     }

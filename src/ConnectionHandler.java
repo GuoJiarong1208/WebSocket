@@ -18,7 +18,7 @@ public class ConnectionHandler implements Runnable{
              OutputStream out = clientSocket.getOutputStream()) {
 
             boolean isAlive = true;
-            clientSocket.setSoTimeout(10000); // 10 秒无数据自动断开
+            clientSocket.setSoTimeout(10000000); // 10 秒无数据自动断开
 
             while (isAlive) {
                 // 读取请求头
@@ -76,7 +76,7 @@ public class ConnectionHandler implements Runnable{
                 // 判断是否为长连接
 
                 HttpRequestParser parser = new HttpRequestParser();
-                HttpRequestParser.HttpRequest req = parser.parse(new ByteArrayInputStream(requestBuilder.toString().getBytes()));
+                HttpRequestParser.HttpRequest req = parser.parse(new ByteArrayInputStream(requestBuilder.toString().getBytes()),body);
 
                 HttpResponse response = router.route(req);
 
