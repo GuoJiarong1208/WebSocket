@@ -56,13 +56,18 @@ public class HttpResponse {
         header("Connection",keep?"keep-alive":"close");
         return this;
     }
+
+
     public HttpResponse redirect(int code,String location){//重定向响应
         if(code!=301&&code!=302) code=302;//检查传入的是不是临时重定向，否则默认302
         status(code);//设置状态码
         header("Location",location);//设置Location头，告诉客户端新的URL跳转地址
-        body("<html><body>Redircting to "+location+"</body><>/html>");////////为了提供给用户一个友好的HTML错误提示页面
+        body("<html><body>Redirecting to "+location+"</body></html>");////////为了提供给用户一个友好的HTML错误提示页面
         return this;
     }
+
+
+
     public HttpResponse notModified(){
         status(304);
         bodyBytes(new byte[0]);//304没有正文

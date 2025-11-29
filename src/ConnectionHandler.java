@@ -75,20 +75,53 @@ public class ConnectionHandler implements Runnable{
 
                 // 判断是否为长连接
 
-                HttpRequestParser parser = new HttpRequestParser();
-                HttpRequestParser.HttpRequest req = parser.parse(new ByteArrayInputStream(requestBuilder.toString().getBytes()),body);
+//                HttpRequestParser parser = new HttpRequestParser();
+//                HttpRequestParser.HttpRequest req = parser.parse(new ByteArrayInputStream(requestBuilder.toString().getBytes()),body);
+//
+//                HttpResponse response = router.route(req);
+//
+//                out.write(response.toBytes());
+//                out.flush();
+//
+//                // 如果客户端请求了keep-alive，并且解析的请求对象也支持keep-alive
+//                // 则保持连接；否则关闭连接
+//                isAlive = req.isKeepAlive() && keepAliveRequested;
+//                System.out.println("[ConnectionHandler] Keep-Alive: " + isAlive);
+//
+//                if (!isAlive) {
+//                    break;
+//                }
+                // 每次请求单独捕获异常，发生异常时返回 500 并关闭连接
+                HttpRequestParser.HttpRequest req = null;
+                try {
+                    HttpRequestParser parser = new HttpRequestParser();
+                    req = parser.parse(new ByteArrayInputStream(requestBuilder.toString().getBytes()), body);
 
-                HttpResponse response = router.route(req);
+                    HttpResponse response = router.route(req);
 
-                out.write(response.toBytes());
-                out.flush();
+                    out.write(response.toBytes());
+                    out.flush();
 
-                // 如果客户端请求了keep-alive，并且解析的请求对象也支持keep-alive
-                // 则保持连接；否则关闭连接
-                isAlive = req.isKeepAlive() && keepAliveRequested;
-                System.out.println("[ConnectionHandler] Keep-Alive: " + isAlive);
+                    isAlive = req.isKeepAlive() && keepAliveRequested;
+                    System.out.println("[ConnectionHandler] Keep-Alive: " + isAlive);
 
-                if (!isAlive) {
+                    if (!isAlive) {
+                        break;
+                    }
+                } catch (Exception e) {
+                    System.err.println("[?] Request handling error: " + e.getMessage());
+                    // 返回 500 响应并关闭连接（也可按需求根据 keep-alive 决定）
+                    HttpResponse err = new HttpResponse()
+                            .status(500)
+                            .contentType("text/plain; charset=utf-8")
+                            .body("Internal Server Error");
+                    try {
+                        out.write(err.toBytes());
+                        out.flush();
+                    } catch (IOException ex) {
+                        // 忽略写入错误
+                    }
+                    // 出错后关闭连接
                     break;
                 }
             }
