@@ -1,4 +1,4 @@
-import java.util.Locale;
+package com.http;
 
 public enum MimeType {
     TEXT_PLAIN("text/plain"),

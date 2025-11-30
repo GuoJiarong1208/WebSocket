@@ -1,7 +1,13 @@
+package com.server;
+
+import com.http.HttpRequestParser;
+import com.http.HttpResponse;
+import com.http.Router;
+
 import java.io.*;
 import java.net.Socket;
 import java.io.IOException;
-//import java.net.http.HttpResponse;
+//import java.net.http.Server.HttpResponse;
 
 public class ConnectionHandler implements Runnable{
     private Socket clientSocket;    //记录客户端socket
@@ -75,10 +81,10 @@ public class ConnectionHandler implements Runnable{
 
                 // 判断是否为长连接
 
-//                HttpRequestParser parser = new HttpRequestParser();
-//                HttpRequestParser.HttpRequest req = parser.parse(new ByteArrayInputStream(requestBuilder.toString().getBytes()),body);
+//                Server.HttpRequestParser parser = new Server.HttpRequestParser();
+//                Server.HttpRequestParser.HttpRequest req = parser.parse(new ByteArrayInputStream(requestBuilder.toString().getBytes()),body);
 //
-//                HttpResponse response = router.route(req);
+//                Server.HttpResponse response = router.route(req);
 //
 //                out.write(response.toBytes());
 //                out.flush();
@@ -86,7 +92,7 @@ public class ConnectionHandler implements Runnable{
 //                // 如果客户端请求了keep-alive，并且解析的请求对象也支持keep-alive
 //                // 则保持连接；否则关闭连接
 //                isAlive = req.isKeepAlive() && keepAliveRequested;
-//                System.out.println("[ConnectionHandler] Keep-Alive: " + isAlive);
+//                System.out.println("[Server.ConnectionHandler] Keep-Alive: " + isAlive);
 //
 //                if (!isAlive) {
 //                    break;
@@ -103,7 +109,7 @@ public class ConnectionHandler implements Runnable{
                     out.flush();
 
                     isAlive = req.isKeepAlive() && keepAliveRequested;
-                    System.out.println("[ConnectionHandler] Keep-Alive: " + isAlive);
+                    System.out.println("[Server.ConnectionHandler] Keep-Alive: " + isAlive);
 
                     if (!isAlive) {
                         break;

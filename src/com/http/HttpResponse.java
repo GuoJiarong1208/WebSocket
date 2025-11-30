@@ -1,3 +1,4 @@
+package com.http;
 
 import java.util.*;
 import java.nio.charset.StandardCharsets;
@@ -84,8 +85,8 @@ public class HttpResponse {
             header("Date",java.time.ZonedDateTime.now().toString());
             //设置当前时间为Date头
         }
-        if(!headers.containsKey("Server")){
-            header("Server","SimpleJavaHttpServer/1.0");
+        if(!headers.containsKey("com")){
+            header("com","SimpleJavaHttpServer/1.0");
         }
     }
     public byte[] toBytes(){//把对象形式存储的数据转成HTTP报文，来发给客户端

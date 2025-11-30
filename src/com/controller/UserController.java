@@ -1,3 +1,9 @@
+package com.controller;
+
+import com.http.HttpRequestParser;
+import com.http.HttpResponse;
+import com.model.UserService;
+
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.util.HashMap;
@@ -65,7 +71,7 @@ public class UserController {
         // GET: 返回登录页
         if ("GET".equalsIgnoreCase(method)) {
             return new HttpResponse()
-                    .status(301)
+                    .status(302)
                     .header("Location", "/")
                     .body("<html><body>Go back to <a href=\"/\">/</a></body></html>")
                     .keepAlive(request.isKeepAlive());

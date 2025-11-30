@@ -1,3 +1,8 @@
+package com.server;
+
+import com.http.HttpRequestParser;
+import com.http.HttpResponse;
+
 import java.io.*;
 import java.net.URLDecoder;
 import java.nio.file.Files;

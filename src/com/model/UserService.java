@@ -1,3 +1,5 @@
+package com.model;
+
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.Map;
 
