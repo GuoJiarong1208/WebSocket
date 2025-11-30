@@ -38,11 +38,13 @@ public class UserController {
 
         // 根据结果构造响应
         if ("注册成功".equals(result)) {
-            // 注册成功，302重定向到登录页面
+            // 注册成功，显示成功信息并提供返回首页的链接
             return new HttpResponse()
-                    .redirect(302, "/login")
+                    .status(200)
+                    .contentType("text/html; charset=utf-8")
+                    .body("<html><body><h1>注册成功</h1><p>您已成功注册！</p></body></html>")
                     .keepAlive(request.isKeepAlive());
-        } else {
+        }else {
             // 注册失败，返回错误信息
             return new HttpResponse()
                     .status(400)  // Bad Request
@@ -62,19 +64,10 @@ public class UserController {
 
         // GET: 返回登录页
         if ("GET".equalsIgnoreCase(method)) {
-            String html = "<!doctype html><html><head><meta charset=\"UTF-8\"><title>登录</title></head>"
-                    + "<body>"
-                    + "<h1>登录</h1>"
-                    + "<form method=\"POST\" action=\"/login\">"
-                    + "  <label>用户名：<input type=\"text\" name=\"username\"/></label><br/>"
-                    + "  <label>密码：<input type=\"password\" name=\"password\"/></label><br/>"
-                    + "  <button type=\"submit\">登录</button>"
-                    + "</form>"
-                    + "</body></html>";
             return new HttpResponse()
-                    .status(200)
-                    .contentType("text/html; charset=UTF-8")
-                    .body(html)
+                    .status(301)
+                    .header("Location", "/")
+                    .body("<html><body>Go back to <a href=\"/\">/</a></body></html>")
                     .keepAlive(request.isKeepAlive());
         }
 
