@@ -77,4 +77,18 @@ src
    │  └── StaticFileHandler.java      # 处理静态文件请求（如 HTML/CSS/JS）
    │
    └── Main.java                           # 程序入口，启动 HttpServer
+```
+## 8. 运行截图
+UI交互注册登录页面：  
 
+![./.assets/UI界面1.png](./.assets/UI界面1.png)
+
+
+UI路径与参数输入页面：  
+
+![./.assets/UI界面2.png](./.assets/UI界面2.png)
+
+
+示例：登录成功页面  
+
+![./.assets/登录成功.png](./.assets/登录成功.png)
