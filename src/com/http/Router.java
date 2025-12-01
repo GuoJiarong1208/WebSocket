@@ -14,7 +14,7 @@ public class Router {
 
     public Router() {
         this.userController = new UserController();
-        this.staticFileHandler = new StaticFileHandler(new File("www"));
+        this.staticFileHandler = new StaticFileHandler(new File("resources"));
     }
 
     /**
