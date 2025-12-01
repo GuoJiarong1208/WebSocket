@@ -81,14 +81,18 @@ src
 ## 8. 运行截图
 UI交互注册登录页面：  
 
-![./.assets/UI界面1.png](./.assets/UI界面1.png)
+<img src="./.assets/UI界面1.png" alt="./.assets/UI界面1.png" style="zoom:30%;" />
 
 
 UI路径与参数输入页面：  
 
-![./.assets/UI界面2.png](./.assets/UI界面2.png)
+<img src="./.assets/UI界面2.png" alt="./.assets/UI界面2.png" style="zoom:30%;" />
 
 
 示例：登录成功页面  
 
-![./.assets/登录成功.png](./.assets/登录成功.png)
+<img src="./.assets/登录成功.png" alt="./.assets/登录成功.png" style="zoom:30%;" />
+
+## 运行环境
+
+- java: JDK21
