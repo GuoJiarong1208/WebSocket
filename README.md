@@ -3,7 +3,6 @@
 ## 1. 项目简介
 本项目基于 **Java Socket API（BIO）** 实现一个简易 HTTP 服务器和客户端，支持 GET、POST、302 重定向、304 缓存验证等。
 
----
 ## 2. 功能列表
 - [x] HTTP 服务器端（BIO）
 - [x] 支持GET和POST请求
@@ -26,8 +25,8 @@
    8. 500：输入“/bug”,弹出网络错误，因为在router里面写了这个命令，会故意抛出IOException，显示“Internal com Error”
    9. 不开服务器，直接运行客户端：出现网络错误
 
+## 4. 任务分配：  
 
-### 4. 任务分配：  
    A: **郭佳荣**  
    B: **崔可喻**  
    C: **程心妍**  
@@ -40,19 +39,19 @@
 | C：业务接口（注册/登录）与路由 | HashMap存用户；实现/register /login POST处理；实现重定向；路由路径分发 | com.http.Router.java<br>com.model.UserService.java<br>com.controller.UserController.java |
 | D：客户端 + 演示  | 用Socket手写GET/POST请求，打印响应，支持302自动重定向；编写最终报告 + 演示流程 | Client.HttpClient.java         |
 
-### 5. 运行说明
-1. 先运行`com.Main`的`com.Main()`方法，启动服务器，监听8080端口
-2. 再运行`Client.HttpClient`的`com.Main()`方法，启动客户端GUI
+## 5. 运行说明
+1. 先运行`com.Main`的`main()`方法，启动服务器，监听8080端口
+2. 再运行`Client.HttpClient`的`main()`方法，启动客户端GUI
 3. 在客户端页面可以实现UI和命令的自行输入设置，并查看状态码响应情况
 4. 同时支持在浏览器中进行注册和登录操作，在浏览器中输入“http://localhost:8080”进入网页
 5. 服务器端控制台会打印请求和响应日志，客户端GUI会显示响应
 ---
-### 6. 注意事项
+## 6. 注意事项
 - 服务器端和客户端需要分别运行在不同的进程中
 - 确保8080端口未被占用
 - 如果需要测试不同的状态码，可以通过修改请求路径或参数来触发相应的处理逻辑
 ---
-### 7. 项目结构
+## 7. 项目结构
 
 ```
 src
