@@ -5,6 +5,7 @@ import java.awt.*;
 import java.io.*;
 import java.net.*;
 import java.nio.charset.StandardCharsets;
+import java.util.Base64;
 import java.util.Enumeration;
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -394,6 +395,51 @@ public class HttpClient extends JFrame {
         });
     }
 
+    // 新增：在 bodyPane 中以 base64 data URL 直接显示图片
+    private void setBodyImage(byte[] imageBytes, String contentType) {
+        // 在 EDT 中执行 UI 更新，这里仍使用 SwingUtilities.invokeLater
+        SwingUtilities.invokeLater(() -> {
+            if (imageBytes == null || imageBytes.length == 0) {
+                setBodyText("[无法渲染图片：无数据]", false);
+                return;
+            }
+            System.out.println("[Client] setBodyImage called, contentType=" + contentType + ", bytes=" + imageBytes.length);
+            try {
+                // 选择扩展名（简单推断）
+                String ext = ".img";
+                String lc = contentType == null ? "" : contentType.toLowerCase();
+                if (lc.contains("png")) ext = ".png";
+                else if (lc.contains("jpeg") || lc.contains("jpg")) ext = ".jpg";
+                else if (lc.contains("gif")) ext = ".gif";
+                // 创建临时文件并写入图片字节
+                File tmp = File.createTempFile("httpclient-image-", ext);
+                try (FileOutputStream fos = new FileOutputStream(tmp)) {
+                    fos.write(imageBytes);
+                    fos.flush();
+                }
+                tmp.deleteOnExit(); // 进程退出时删除
+
+                // 生成 file:// URL，注意 windows 路径分隔符
+                String fileUrl = tmp.toURI().toURL().toString();
+
+                // 用一个简单的 HTML 引用该本地文件，JEditorPane 的 HTML 引擎能良好加载 file:// 图片
+                String html = "<html><body style='margin:0;padding:8px;background:#fff;'>" +
+                        "<div style='text-align:center;'>" +
+                        "<img src=\"" + fileUrl + "\" style='max-width:100%;height:auto;display:inline-block;'/>" +
+                        "</div>" +
+                        "</body></html>";
+
+                bodyPane.setContentType("text/html;charset=utf-8");
+                bodyPane.setText(html);
+                bodyPane.setCaretPosition(0);
+                System.out.println("[Client] Image rendered from temp file: " + tmp.getAbsolutePath());
+            } catch (Exception e) {
+                e.printStackTrace();
+                // 回退：显示二进制长度信息
+                setBodyText("[无法渲染图片，长度 " + imageBytes.length + " bytes]", false);
+            }
+        });
+    }
     private String escapeHtml(String s) {
         return s.replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;");
     }
@@ -633,7 +679,12 @@ public class HttpClient extends JFrame {
                                 String text = new String(respBody, StandardCharsets.UTF_8);
                                 setBodyText(text, isHtml);
                             } else {
-                                setBodyText("[二进制内容：" + respBody.length + " bytes]\nContent-Type: " + lastContentType, false);
+                                // 如果是图片，直接渲染；否则显示二进制提示
+                                if (lastContentType.toLowerCase().startsWith("image/")) {
+                                    setBodyImage(respBody, lastContentType);
+                                } else {
+                                    setBodyText("[二进制内容：" + respBody.length + " bytes]\nContent-Type: " + lastContentType, false);
+                                }
                                 SwingUtilities.invokeLater(() -> saveBodyBtn.setEnabled(true));
                             }
                         } else {
@@ -662,6 +713,7 @@ public class HttpClient extends JFrame {
                                     });
                                 }
                             } else {
+                                // 二进制响应（Auth 面板也可能收到图片等）
                                 SwingUtilities.invokeLater(() -> authResultArea.append("[二进制响应，长度 " + respBody.length + " bytes]\n"));
                                 SwingUtilities.invokeLater(() -> saveBodyBtn.setEnabled(true));
                                 SwingUtilities.invokeLater(() -> {
@@ -669,6 +721,10 @@ public class HttpClient extends JFrame {
                                     authStatusLabel.setForeground(new Color(55, 65, 81));
                                     authStatusLabel.setBackground(new Color(248, 250, 252));
                                 });
+                                // 如果是图片，渲染到右边的 bodyPane（也会保持保存按钮可用）
+                                if (lastContentType.toLowerCase().startsWith("image/")) {
+                                    setBodyImage(respBody, lastContentType);
+                                }
                             }
                         }
 
