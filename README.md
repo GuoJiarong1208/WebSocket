@@ -8,7 +8,7 @@
 - [x] 支持GET和POST请求
 - [x] 服务器、客户端均支持状态码：200、301、302、304、404、405、500，客户端可根据不同状态码做出响应
 - [x] 实现长连接 keep-alive
-- [x] MIME 类型支持text/plain、json、text/html、png、Location
+- [x] MIME 类型支持text/plain、json、text/html、jpg、Location
 - [x] 实现注册，登录功能,数据存在内存中
 - [x] HTTP客户端可以发送请求报文、呈现响应报文,实现了GUI
 
