@@ -20,7 +20,9 @@ import java.util.regex.Pattern;
  */
 public class HttpClient extends JFrame {
     // Shared controls
-    private final JTextField baseUrlField = new JTextField("http://localhost:8018/");
+    /// 如果是服务器和客户端是同一台机器，可以改为 http://localhost:8018
+    /// 现在连接的是云服务器的公网IP地址
+    private final JTextField baseUrlField = new JTextField("http://140.210.142.61:8018");
     private final JCheckBox followRedirectsCb = new JCheckBox("自动跟随重定向", true);
     private final JCheckBox keepAliveCb = new JCheckBox("Connection: keep-alive", false);
     private final JCheckBox useLastEtagCb = new JCheckBox("Use Last ETag", false);
