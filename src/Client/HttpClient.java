@@ -20,7 +20,7 @@ import java.util.regex.Pattern;
  */
 public class HttpClient extends JFrame {
     // Shared controls
-    private final JTextField baseUrlField = new JTextField("http://localhost:8080/");
+    private final JTextField baseUrlField = new JTextField("http://localhost:8018/");
     private final JCheckBox followRedirectsCb = new JCheckBox("自动跟随重定向", true);
     private final JCheckBox keepAliveCb = new JCheckBox("Connection: keep-alive", false);
     private final JCheckBox useLastEtagCb = new JCheckBox("Use Last ETag", false);

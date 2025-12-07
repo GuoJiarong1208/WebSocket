@@ -24,7 +24,7 @@ public class ConnectionHandler implements Runnable{
              OutputStream out = clientSocket.getOutputStream()) {
 
             boolean isAlive = true;
-            clientSocket.setSoTimeout(10000000); // 10 秒无数据自动断开
+            clientSocket.setSoTimeout(100); // 10 秒无数据自动断开
 
             while (isAlive) {
                 // 读取请求头
@@ -78,26 +78,6 @@ public class ConnectionHandler implements Runnable{
 
                 System.out.println("===== Received Request =====");
                 System.out.println(fullRequest);
-
-                // 判断是否为长连接
-
-//                Server.HttpRequestParser parser = new Server.HttpRequestParser();
-//                Server.HttpRequestParser.HttpRequest req = parser.parse(new ByteArrayInputStream(requestBuilder.toString().getBytes()),body);
-//
-//                Server.HttpResponse response = router.route(req);
-//
-//                out.write(response.toBytes());
-//                out.flush();
-//
-//                // 如果客户端请求了keep-alive，并且解析的请求对象也支持keep-alive
-//                // 则保持连接；否则关闭连接
-//                isAlive = req.isKeepAlive() && keepAliveRequested;
-//                System.out.println("[Server.ConnectionHandler] Keep-Alive: " + isAlive);
-//
-//                if (!isAlive) {
-//                    break;
-//                }
-                // 每次请求单独捕获异常，发生异常时返回 500 并关闭连接
                 HttpRequestParser.HttpRequest req = null;
                 try {
                     HttpRequestParser parser = new HttpRequestParser();

@@ -3,9 +3,9 @@ package com.http;
 public enum MimeType {
     TEXT_PLAIN("text/plain"),
     TEXT_HTML("text/html"),
+    IMAGE_JPG("image/jpg"),
     IMAGE_PNG("image/png"),
-    APPLICATION_JSON("application/json"),//先列出来了三个枚举基本数据类型，文本，图片和网页。
-    IMAGE_JPG("image/jpg");
+    APPLICATION_JSON("application/json");//先列出来了三个枚举基本数据类型，文本，图片和网页。
 
 
     private final String type;

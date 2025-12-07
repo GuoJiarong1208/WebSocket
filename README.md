@@ -3,6 +3,8 @@
 ## 1. 项目简介
 本项目基于 **Java Socket API（BIO）** 实现一个简易 HTTP 服务器和客户端，支持 GET、POST、302 重定向、304 缓存验证等。
 
+我们是第18组，所以使用的是8018端口。
+
 ## 2. 功能列表
 - [x] HTTP 服务器端（BIO）
 - [x] 支持GET和POST请求
@@ -40,11 +42,12 @@
 | D：客户端 + 演示  | 用Socket手写GET/POST请求，打印响应，支持302自动重定向；编写最终报告 + 演示流程 | Client.HttpClient.java         |
 
 ## 5. 运行说明
-1. 先运行`com.Main`的`main()`方法，启动服务器，监听8080端口
+1. 先运行`com.Main`的`main()`方法，启动服务器，监听8018端口
 2. 再运行`Client.HttpClient`的`main()`方法，启动客户端GUI
 3. 在客户端页面可以实现UI和命令的自行输入设置，并查看状态码响应情况
 4. 同时支持在浏览器中进行注册和登录操作，在浏览器中输入“http://localhost:8080”进入网页
 5. 服务器端控制台会打印请求和响应日志，客户端GUI会显示响应
+6. 长连接的验证可以通过查看UI界面下方的Connection信息以及服务器打印的响应日志来验证。
 ---
 ## 6. 注意事项
 - 服务器端和客户端需要分别运行在不同的进程中
@@ -93,6 +96,13 @@ UI路径与参数输入页面：
 
 <img src="./.assets/登录成功.png" alt="./.assets/登录成功.png" style="zoom:30%;" />
 
+
+html文件处理与显示页面：  
+<img src="./.assets/index页面.png" alt="./.assets/index页面.png" style="zoom:30%;" />
+<img src="./.assets/缓存页面.png" alt="./.assets/缓存页面.png" style="zoom:30%;" />
+
+jpg图片文件处理与显示页面：  
+<img src="./.assets/jpg显示.png" alt="./.assets/jpg显示.png" style="zoom:30%;" />
 ## 运行环境
 
-- java: JDK21
+- java: JDK21、JDK11
